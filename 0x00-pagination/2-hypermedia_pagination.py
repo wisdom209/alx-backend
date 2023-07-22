@@ -44,7 +44,6 @@ class Server:
 
     def get_hyper(self, page: int = 1, page_size: int = 10) -> Dict:
         page_range = self.get_page(page, page_size)
-        print(len(self.dataset()))
         return {
             'page_size': len(page_range),
             'page': page,
