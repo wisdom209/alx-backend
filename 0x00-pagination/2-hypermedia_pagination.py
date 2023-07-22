@@ -45,7 +45,7 @@ class Server:
     def get_hyper(self, page: int = 1, page_size: int = 10) -> Dict:
         page_range = self.get_page(page, page_size)
         return {
-            'page_size': len(page_range),
+            'page_size': page_size if page_size <= len(page_range) else len(page_range),
             'page': page,
             'data': page_range,
             'next_page': (page + 1) if len(self.get_page(page, page_size)) > 0 else None,  # nopep8
