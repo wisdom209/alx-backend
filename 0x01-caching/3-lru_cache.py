@@ -4,6 +4,7 @@ from collections import deque
 BaseCaching = __import__('base_caching').BaseCaching
 
 
+
 class LRUCache(BaseCaching):
     """LRU caching class"""
 
@@ -19,7 +20,7 @@ class LRUCache(BaseCaching):
                     and key not in self.cache_data:
                 lr_key = self.key_queue.pop(0)
                 self.cache_data.pop(lr_key)
-                print(f"DISCARD {lr_key}")
+                print(f"DISCARD: {lr_key}")
         if key in self.cache_data:
             self.key_queue.remove(key)
         self.cache_data[key] = item
@@ -32,3 +33,4 @@ class LRUCache(BaseCaching):
             self.key_queue.append(key)
             return self.cache_data[key]
         return None
+

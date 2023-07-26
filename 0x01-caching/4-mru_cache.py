@@ -19,7 +19,7 @@ class MRUCache(BaseCaching):
                     and key not in self.cache_data:
                 mr_key = self.key_queue.pop()
                 self.cache_data.pop(mr_key)
-                print(f"DISCARD {mr_key}")
+                print(f"DISCARD: {mr_key}")
         if key in self.cache_data:
             self.key_queue.remove(key)
         self.cache_data[key] = item
