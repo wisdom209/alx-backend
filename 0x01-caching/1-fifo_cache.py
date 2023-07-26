@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Caching module"""
-BaseCaching = __import__('base_caching').BaseCaching
 from collections import deque
+BaseCaching = __import__('base_caching').BaseCaching
 
 
 class FIFOCache(BaseCaching):
@@ -19,9 +19,8 @@ class FIFOCache(BaseCaching):
                 first_item = self.key_queue.popleft()
                 self.cache_data.pop(first_item)
                 print(f"DISCARD {first_item}")
-
         self.cache_data[key] = item
-        self.key_queue.append(key)
+        print("DISCARD: {}".format(first_item))
 
     def get(self, key):
         """get from cache"""
