@@ -4,7 +4,6 @@ from collections import deque
 BaseCaching = __import__('base_caching').BaseCaching
 
 
-
 class LRUCache(BaseCaching):
     """LRU caching class"""
 
@@ -33,4 +32,3 @@ class LRUCache(BaseCaching):
             self.key_queue.append(key)
             return self.cache_data[key]
         return None
-
