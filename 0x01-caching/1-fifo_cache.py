@@ -17,7 +17,6 @@ class FIFOCache(BaseCaching):
         if key is not None and item is not None:
             if len(self.cache_data) >= BaseCaching.MAX_ITEMS\
                     and key not in self.cache_data:
-                if (len(self.key_queue) > 0):
                     deleted_key = self.key_queue.popleft()
                     del self.cache_data[deleted_key]
                     print(f"DISCARD {deleted_key}")
