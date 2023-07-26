@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
-"""Caching module"""
+"""FIFO caching"""
 from collections import deque
-BaseCaching = __import__('base_caching').BaseCaching
+Base = __import__('base_caching').BaseCaching
 
 
-class FIFOCache(BaseCaching):
+class FIFOCache(Base):
     """FIFO Cache implementation"""
 
     def __init__(self):
