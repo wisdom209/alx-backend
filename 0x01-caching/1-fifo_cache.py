@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 """Caching module"""
+from collections import deque
 BaseCaching = __import__('base_caching').BaseCaching
 
 
@@ -9,7 +10,7 @@ class FIFOCache(BaseCaching):
     def __init__(self):
         """initialize """
         super().__init__()
-        self.key_queue = []
+        self.key_queue = deque()
 
     def put(self, key, item):
         """Add an item to cache"""
@@ -17,9 +18,10 @@ class FIFOCache(BaseCaching):
             if len(self.cache_data) >= BaseCaching.MAX_ITEMS\
                     and key not in self.cache_data:
                 if (len(self.key_queue) > 0):
-                    del self.cache_data[self.key_queue[0]]
-                    print(f"DISCARD {self.key_queue[0]}")
-                    self.key_queue.pop(0)
+                    deleted_key = self.key_queue.popleft()
+                    del self.cache_data[deleted_key]
+                    print(f"DISCARD {deleted_key}")
+
             self.cache_data[key] = item
             self.key_queue.append(key)
 
