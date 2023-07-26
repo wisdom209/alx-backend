@@ -28,5 +28,7 @@ class MRUCache(BaseCaching):
     def get(self, key):
         """get from cache"""
         if key is not None and key in self.cache_data:
+            self.key_queue.remove(key)
+            self.key_queue.append(key)
             return self.cache_data[key]
         return None
