@@ -1,29 +1,29 @@
 #!/usr/bin/env python3
-"""FIFO caching"""
-from collections import deque
-Base = __import__('base_caching').BaseCaching
+"""Caching module"""
+BaseCaching = __import__('base_caching').BaseCaching
 
 
-class FIFOCache(Base):
-    """FIFO Cache implementation"""
+class FIFOCache(BaseCaching):
+    """FIFO caching class"""
 
     def __init__(self):
-        """initialise the init class"""
+        """initialize """
         super().__init__()
-        self.queue = deque()
+        self.key_queue = []
 
     def put(self, key, item):
-        """method that puts the key-value pairs in the FIFO algo"""
+        """Add an item to cache"""
         if key is not None and item is not None and key not in self.cache_data:
-            if len(self.cache_data) >= Base.MAX_ITEMS:
-                oldest_item = self.queue.popleft()
-                self.cache_data.pop(oldest_item)
-                print("DISCARD: {}".format(oldest_item))
+            if len(self.cache_data) >= BaseCaching.MAX_ITEMS:
+                first_item = self.key_queue.pop(0)
+                del self.cache_data[first_item]
+                print(f"DISCARD {first_item}")
+
         self.cache_data[key] = item
-        self.queue.append(key)
+        self.key_queue.append(key)
 
     def get(self, key):
-        """get the values in the FIFO algorithm"""
+        """get from cache"""
         if key is not None and key in self.cache_data:
             return self.cache_data[key]
         return None
