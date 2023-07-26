@@ -6,11 +6,10 @@ BaseCaching = __import__('base_caching').BaseCaching
 class FIFOCache(BaseCaching):
     """FIFO caching class"""
 
-    key_queue = []
-
     def __init__(self):
         """initialize """
         super().__init__()
+        self.key_queue = []
 
     def put(self, key, item):
         """Add an item to cache"""
