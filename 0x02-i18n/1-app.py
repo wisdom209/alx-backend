@@ -15,6 +15,7 @@ app.config["BABEL_DEFAULT_TIMEZONE"] = "UTC"
 babel = Babel(app)
 
 
+@app.route('/', strict_slashes=False)
 def index():
     """Route function"""
     return render_template("1-index.html")
