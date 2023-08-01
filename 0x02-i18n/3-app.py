@@ -1,10 +1,10 @@
-#!/usr/bin/env python3
+#!/usr/bin/python3
 """Flask app"""
 from flask import Flask, render_template, request
 from flask_babel import Babel
 
 
-class Config(object):
+class Config:
     """config classs"""
     LANGUAGES = ["en", "fr"]
     BABEL_DEFAULT_LOCALE = "en"
@@ -12,7 +12,7 @@ class Config(object):
 
 
 app = Flask(__name__)
-app.config.from_object(app.config['LANGUAGES'])
+app.config.from_object(Config)
 babel = Babel(app)
 
 
