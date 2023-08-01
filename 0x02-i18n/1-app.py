@@ -10,12 +10,9 @@ class config:
 
 
 app = Flask(__name__)
+app.config["BABEL_DEFAULT_LOCALE"] = "en"
+app.config["BABEL_DEFAULT_TIMEZONE"] = "UTC"
 babel = Babel(app)
-
-
-@babel.localeselector
-def get_locale():
-    return config.LANGUAGES[0]
 
 
 @app.route('/', strict_slashes=False)
