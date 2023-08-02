@@ -2,7 +2,9 @@
 """Flask app"""
 from flask import Flask, render_template, request, g
 from flask_babel import Babel, gettext as _
+from babel import dates
 import pytz
+from datetime import datetime
 
 
 class Config:
@@ -71,7 +73,9 @@ def get_timezone():
 def index():
     """Route function"""
     username = g.user['name']
-    return render_template("7-index.html", username=username)
+    current_time = dates.format_datetime(datetime.now(), locale=get_locale())
+    return render_template("index.html",
+                           username=username, current_time=current_time)
 
 
 if __name__ == '__main__':
