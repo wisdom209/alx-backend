@@ -14,6 +14,7 @@ class Config:
 app = Flask(__name__)
 app.config.from_object(Config)
 babel = Babel(app)
+
 users = {
     1: {"name": "Balou", "locale": "fr", "timezone": "Europe/Paris"},
     2: {"name": "Beyonce", "locale": "en", "timezone": "US/Central"},
@@ -24,6 +25,8 @@ users = {
 
 def get_user(login_as):
     """get a user"""
+    if login_as is None:
+        return None
     return users.get(int(login_as))
 
 
@@ -46,7 +49,9 @@ def get_locale():
 @app.route('/', strict_slashes=False)
 def index():
     """Route function"""
-    username = g.user['name']
+    username = None
+    if g.user:
+        username = g.user.get('name')
     return render_template("5-index.html", username=username)
 
 
