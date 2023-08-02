@@ -4,7 +4,7 @@ from flask import Flask, render_template, request
 from flask_babel import Babel, gettext as _
 
 
-class Config:
+class Config(object):
     """config classs"""
     LANGUAGES = ["en", "fr"]
     BABEL_DEFAULT_LOCALE = "en"
@@ -22,7 +22,7 @@ def get_locale():
     lang = request.args.get('locale')
     if lang in app.config['LANGUAGES']:
         return lang
-    return request.accept_languages.best_match(Config.LANGUAGES)
+    return request.accept_languages.best_match(app.config['LANGUAGES'])
 
 
 @app.route('/', strict_slashes=False)
