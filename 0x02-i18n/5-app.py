@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """Flask app"""
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, g
 from flask_babel import Babel, gettext as _
 
 
@@ -16,6 +16,24 @@ app.config.from_object(Config)
 babel = Babel(app)
 
 
+def get_user(login_as):
+    """get a user"""
+    users = {
+        1: {"name": "Balou", "locale": "fr", "timezone": "Europe/Paris"},
+        2: {"name": "Beyonce", "locale": "en", "timezone": "US/Central"},
+        3: {"name": "Spock", "locale": "kg", "timezone": "Vulcan"},
+        4: {"name": "Teletubby", "locale": None, "timezone": "Europe/London"},
+    }
+    return users.get(int(login_as))
+
+
+@app.before_request
+def before_request():
+    """Before a request"""
+    login_as = request.args.get('login_as')
+    g.user = get_user(login_as)
+
+
 @babel.localeselector
 def get_locale():
     """get locale"""
@@ -28,7 +46,8 @@ def get_locale():
 @app.route('/', strict_slashes=False)
 def index():
     """Route function"""
-    return render_template("5-index.html")
+    username = g.user['name']
+    return render_template("5-index.html", username=username)
 
 
 if __name__ == '__main__':
