@@ -40,14 +40,18 @@ def get_locale():
     lang = request.args.get('locale')
     if lang in app.config['LANGUAGES']:
         return lang
-    return request.accept_languages.best_match(Config.LANGUAGES)
+    if g.user.get('locale') in app.config['LANGUAGES']:
+        return g.user.get('locale')
+    if request.accept_languages.best_match(app.config['LANGUAGES']):
+        return request.accept_languages.best_match(app.config['LANGUAGES'])
+    return app.config['BABEL_DEFAULT_LOCALE']
 
 
 @app.route('/', strict_slashes=False)
 def index():
     """Route function"""
     username = g.user['name']
-    return render_template("5-index.html", username=username)
+    return render_template("6-index.html", username=username)
 
 
 if __name__ == '__main__':
