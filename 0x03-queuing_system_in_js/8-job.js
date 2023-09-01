@@ -3,10 +3,10 @@ const createPushNotificationsJobs = (jobs, queue) => {
 	
 	jobs.forEach((v, i) => {
 		const job = queue.createJob('push_notification_code_3', v).save((err) => {
-			if (!err) console.log(`Notification job created: ${job.id}`)
+			if (!err) console.log(`Notification job created: ${job?.id}`)
 		})
 	
-		job.on('complete', () => {
+		job?.on('complete', () => {
 			console.log(job)
 			console.log(`Notification job ${job.id} completed`)
 		}).on('failed', function (error) {

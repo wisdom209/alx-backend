@@ -5,19 +5,23 @@ import { createQueue } from 'kue';
 
 import createPushNotificationsJobs from './8-job'
  
-const queue = createQueue();
+const queue = createQueue({
+	redis: {
+		host: '127.0.0.1',
+		port: 6379
+	}
+})
 
 describe('Test createPushNotificatinsJobs function', function() {
-  before(function () {
+  
+  beforeEach(function () {
     queue.testMode.enter();
   });
 
-  afterEach(function () {
-    queue.testMode.clear();
-  });
 
-  after(function () {
-    queue.testMode.exit();
+  afterEach(function () {    
+	queue.testMode.clear();
+	queue.testMode.exit()
   });
 
   it('display an error message if jobs is not an array', function() {
@@ -35,10 +39,9 @@ describe('Test createPushNotificatinsJobs function', function() {
         message: 'This is the code 4562 to verify your account'
       },
     ];
-
+	
     createPushNotificationsJobs(jobs, queue);
 
-	console.log(queue.testMode.jobs)
     expect(queue.testMode.jobs.length).to.equal(2);
 
     expect(queue.testMode.jobs[0].type).to.equal('push_notification_code_3');
@@ -48,6 +51,7 @@ describe('Test createPushNotificatinsJobs function', function() {
     expect(queue.testMode.jobs[1].type).to.equal('push_notification_code_3');
     expect(queue.testMode.jobs[1].data).to.eql(jobs[1]);
   });
+
 });
 
 
